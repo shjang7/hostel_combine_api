@@ -1,0 +1,28 @@
+{
+  "name": "hostel_combine_api",
+  "version": "1.0.0",
+  "description": "HostelCombine backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shjang7/hostel_combine_api.git"
+  },
+  "author": "Suhyeon Jang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shjang7/hostel_combine_api/issues"
+  },
+  "homepage": "https://github.com/shjang7/hostel_combine_api#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
