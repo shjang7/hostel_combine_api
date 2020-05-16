@@ -49,10 +49,21 @@ exports.createHostel = async (req, res, next) => {
 // @desc    Update hostel
 // @route   PUT /api/v1/hostels/:id
 // @access  Private
-exports.updateHostel = (req, res, next) => {
-  res
-    .status(200)
-    .json({ success: true, msg: `Update hostels ${req.params.id}` });
+exports.updateHostel = async (req, res, next) => {
+  try {
+    const hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!hostel) {
+      return res.status(400).json({ success: false });
+    }
+
+    res.status(200).json({ success: true, data: hostel });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Delete hostel
