@@ -8,7 +8,7 @@ exports.getHostels = (req, res, next) => {
 // @desc    Get single hostel
 // @route   GET /api/v1/hostels/:id
 // @access  Public
-exports.getHostel = (req, res, next) => {
+exports.getHostel = async (req, res, next) => {
   res.status(200).json({ success: true, msg: `Show hostel ${req.params.id}` });
 };
 
