@@ -3,15 +3,31 @@ const Hostel = require('../models/Hostel');
 // @desc    Get all hostels
 // @route   GET /api/v1/hostels
 // @access  Public
-exports.getHostels = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'Show all hostels' });
+exports.getHostels = async (req, res, next) => {
+  try {
+    const hostels = await Hostel.find();
+
+    res.status(200).json({ success: true, data: hostels });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Get single hostel
 // @route   GET /api/v1/hostels/:id
 // @access  Public
 exports.getHostel = async (req, res, next) => {
-  res.status(200).json({ success: true, msg: `Show hostel ${req.params.id}` });
+  try {
+    const hostel = await Hostel.findById(req.params.id);
+
+    if (!hostel) {
+      return res.status(400).json({ success: false });
+    }
+
+    res.status(200).json({ success: true, data: hostel });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Create hostel
