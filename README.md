@@ -10,3 +10,5 @@
 - [MAPQUEST API KEY](https://developer.mapquest.com/)
 - [centerSphere](https://docs.mongodb.com/manual/reference/operator/query/centerSphere/)
 - [gt aggregation](https://docs.mongodb.com/manual/reference/operator/query/gt/index.html)
+- [mongoose query](https://mongoosejs.com/docs/queries.html)
+  - select, sort
