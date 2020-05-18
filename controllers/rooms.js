@@ -67,3 +67,42 @@ exports.addRoom = asyncHandler(async (req, res, next) => {
     data: room,
   });
 });
+
+// @desc    Update room
+// @route   PUT /api/v1/courses/:id
+// @access  Private
+exports.updateRoom = asyncHandler(async (req, res, next) => {
+  let room = await Room.findById(req.params.id);
+
+  if (!room) {
+    return next(new ErrorResponse(`Room not found`, 404));
+  }
+
+  room = await Room.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: room,
+  });
+});
+
+// @desc    Delete room
+// @route   DELETE /api/v1/courses/:id
+// @access  Private
+exports.deleteRoom = asyncHandler(async (req, res, next) => {
+  let room = await Room.findById(req.params.id);
+
+  if (!room) {
+    return next(new ErrorResponse(`Room not found`, 404));
+  }
+
+  await room.remove();
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
