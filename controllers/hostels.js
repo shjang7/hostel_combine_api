@@ -1,6 +1,7 @@
 const Hostel = require('../models/Hostel');
 const asyncHandler = require('../middleware/async');
 const geocoder = require('../utils/geocoder');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Get all hostels
 // @route   GET /api/v1/hostels
@@ -22,7 +23,7 @@ exports.getHostels = asyncHandler(async (req, res, next) => {
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
   // Finding resource
-  query = Hostel.find(JSON.parse(queryStr));
+  query = Hostel.find(JSON.parse(queryStr)).populate('rooms');
 
   // Select fields
   if (req.query.select) {
@@ -79,6 +80,9 @@ exports.getHostels = asyncHandler(async (req, res, next) => {
 // @access  Public
 exports.getHostel = asyncHandler(async (req, res, next) => {
   const hostel = await Hostel.findById(req.params.id);
+  if (!hostel) {
+    return next(new ErrorResponse('Hostel not found', 404));
+  }
   res.status(200).json({ success: true, data: hostel });
 });
 
@@ -103,6 +107,10 @@ exports.updateHostel = asyncHandler(async (req, res, next) => {
     runValidators: true,
   });
 
+  if (!hostel) {
+    return next(new ErrorResponse('Hostel not found', 404));
+  }
+
   res.status(200).json({ success: true, data: hostel });
 });
 
@@ -111,8 +119,11 @@ exports.updateHostel = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.deleteHostel = asyncHandler(async (req, res, next) => {
   const hostel = await Hostel.findById(req.params.id);
+  if (!hostel) {
+    return next(new ErrorResponse('Hostel not found', 404));
+  }
 
-  await Hostel.remove();
+  await hostel.remove();
 
   res.status(200).json({ success: true, data: {} });
 });

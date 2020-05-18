@@ -12,7 +12,10 @@ exports.getRooms = asyncHandler(async (req, res, next) => {
   if (req.params.hostelId) {
     query = Room.find({ hostel: req.params.hostelId });
   } else {
-    query = Room.find();
+    query = Room.find().populate({
+      path: 'hostel',
+      select: 'name description',
+    });
   }
 
   const rooms = await query;
