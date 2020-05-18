@@ -9,6 +9,12 @@ const {
   getHostelsInRadius,
 } = require('../controllers/hostels');
 
+// Include other resource routers
+const roomRouter = require('./rooms');
+
+// Re-route into other resource routers
+router.use('/:hostelId/rooms', roomRouter);
+
 router.route('/radius/:zipcode/:distance').get(getHostelsInRadius);
 
 router
