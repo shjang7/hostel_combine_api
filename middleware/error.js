@@ -1,9 +1,22 @@
-const errorHandler = (err, req, res, next) => {
-  console.log(err.stack.red);
+const ErrorResponse = require('../utils/errorResponse');
 
-  res.status(500).json({
+const errorHandler = (err, req, res, next) => {
+  let error = { ...err, name: err.name, message: err.message };
+
+  // Log to console for dev
+  if (process.env.NODE_ENV === 'development') {
+    console.log(JSON.stringify(error));
+  }
+
+  // Mongoose bad ObjectId
+  if (error.name === 'CastError') {
+    const message = `Hostel not found`;
+    error = new ErrorResponse(message, 404);
+  }
+
+  res.status(error.statusCode || 500).json({
     success: false,
-    error: err.message || 'Server Error',
+    error: error.message || 'Server Error',
   });
 };
 

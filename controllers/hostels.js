@@ -1,5 +1,4 @@
 const Hostel = require('../models/Hostel');
-const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Get all hostels
 // @route   GET /api/v1/hostels
@@ -10,7 +9,7 @@ exports.getHostels = async (req, res, next) => {
 
     res.status(200).json({ success: true, data: hostels });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -20,12 +19,6 @@ exports.getHostels = async (req, res, next) => {
 exports.getHostel = async (req, res, next) => {
   try {
     const hostel = await Hostel.findById(req.params.id);
-
-    if (!hostel) {
-      return next(
-        new ErrorResponse(`Hostel not found with id of ${req.params.id}`, 404),
-      );
-    }
 
     res.status(200).json({ success: true, data: hostel });
   } catch (err) {
@@ -45,7 +38,7 @@ exports.createHostel = async (req, res, next) => {
       data: hostel,
     });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -59,21 +52,23 @@ exports.updateHostel = async (req, res, next) => {
       runValidators: true,
     });
 
-    if (!hostel) {
-      return res.status(400).json({ success: false });
-    }
-
     res.status(200).json({ success: true, data: hostel });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
 // @desc    Delete hostel
 // @route   DELETE /api/v1/hostels/:id
 // @access  Private
-exports.deleteHostel = (req, res, next) => {
-  res
-    .status(200)
-    .json({ success: true, msg: `Delete hostel ${req.params.id}` });
+exports.deleteHostel = async (req, res, next) => {
+  try {
+    const hostel = await Hostel.findById(req.params.id);
+
+    await Hostel.remove();
+
+    res.status(200).json({ success: true, data: {} });
+  } catch (err) {
+    next(err);
+  }
 };
