@@ -1,4 +1,5 @@
 const Hostel = require('../models/Hostel');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Get all hostels
 // @route   GET /api/v1/hostels
@@ -21,7 +22,9 @@ exports.getHostel = async (req, res, next) => {
     const hostel = await Hostel.findById(req.params.id);
 
     if (!hostel) {
-      return res.status(400).json({ success: false });
+      return next(
+        new ErrorResponse(`Hostel not found with id of ${req.params.id}`, 404),
+      );
     }
 
     res.status(200).json({ success: true, data: hostel });
