@@ -6,8 +6,18 @@ const geocoder = require('../utils/geocoder');
 // @route   GET /api/v1/hostels
 // @access  Public
 exports.getHostels = asyncHandler(async (req, res, next) => {
-  const hostels = await Hostel.find();
-  res.status(200).json({ success: true, data: hostels });
+  let query;
+  let queryStr = JSON.stringify(req.query);
+
+  console.log(queryStr);
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+  query = Hostel.find(JSON.parse(queryStr));
+
+  const hostels = await query;
+
+  console.log(queryStr);
+  res.status(200).json({ success: true, count: hostels.length, data: hostels });
 });
 
 // @desc    Get single hostel
