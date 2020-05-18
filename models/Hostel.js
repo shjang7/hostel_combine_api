@@ -69,7 +69,7 @@ const HostelSchema = new mongoose.Schema(
         'paid breakfast',
       ],
     },
-    minimumCost: Number,
+    minimumPrice: Number,
     averageRating: {
       type: Number,
       min: [1, 'Rating must be at least 1'],

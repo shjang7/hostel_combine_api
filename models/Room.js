@@ -41,4 +41,39 @@ const RoomSchema = new mongoose.Schema({
   },
 });
 
+// Static method to get min of room price
+RoomSchema.statics.getMinimumPrice = async function(hostelId) {
+  console.log('Calculating min price...'.blue);
+
+  const obj = await this.aggregate([
+    {
+      $match: { hostel: hostelId },
+    },
+    {
+      $group: {
+        _id: '$hostel',
+        minimumPrice: { $min: '$price' },
+      },
+    },
+  ]);
+
+  try {
+    await this.model('Hostel').findByIdAndUpdate(hostelId, {
+      minimumPrice: Math.ceil(obj[0].minimumPrice / 10) * 10,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Call getMinimumPrice after save
+RoomSchema.post('save', function() {
+  this.constructor.getMinimumPrice(this.hostel);
+});
+
+// Call getMinimumPrice before remove
+RoomSchema.pre('remove', function() {
+  this.constructor.getMinimumPrice(this.hostel);
+});
+
 module.exports = mongoose.model('Room', RoomSchema);
