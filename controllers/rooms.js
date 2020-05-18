@@ -26,3 +26,18 @@ exports.getRooms = asyncHandler(async (req, res, next) => {
     data: rooms,
   });
 });
+
+// @desc    Get single room
+// @route   GET /api/v1/rooms/:id
+// @access  Public
+exports.getRoom = asyncHandler(async (req, res, next) => {
+  const room = await Room.findById(req.params.id).populate({
+    path: 'hostel',
+    select: 'name description',
+  });
+
+  res.status(200).json({
+    success: true,
+    data: room,
+  });
+});
