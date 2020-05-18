@@ -1,5 +1,6 @@
 const Hostel = require('../models/Hostel');
 const asyncHandler = require('../middleware/async');
+const geocoder = require('../utils/geocoder');
 
 // @desc    Get all hostels
 // @route   GET /api/v1/hostels
@@ -50,4 +51,27 @@ exports.deleteHostel = asyncHandler(async (req, res, next) => {
   await Hostel.remove();
 
   res.status(200).json({ success: true, data: {} });
+});
+
+// @desc    Get hostels within a radius
+// @route   GET /api/v1/hostels/radius/:zipcode/:distance
+// @access  Private
+exports.getHostelsInRadius = asyncHandler(async (req, res, next) => {
+  const { zipcode, distance } = req.params;
+
+  // Get lat/lng from geocoder
+  const loc = await geocoder.geocode(zipcode);
+  const lat = loc[0].latitude;
+  const lng = loc[0].longitude;
+
+  // Calc radius using radians;
+  // Divide dist by radius of Earth
+  // Earth Radius = 3,963 mi / 6,378 km
+  const radius = distance / 3963;
+
+  const hostels = await Hostel.find({
+    location: { $geoWithin: { $centerSphere: [[lat, lng], radius] } },
+  });
+
+  res.status(200).json({ success: true, count: hostels.length, data: hostels });
 });

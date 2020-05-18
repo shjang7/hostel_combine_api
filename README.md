@@ -8,3 +8,4 @@
 - [Express async handler](https://github.com/Abazhenov/express-async-handler)
 - [Geocoder API npm](https://www.npmjs.com/package/node-geocoder)
 - [MAPQUEST API KEY](https://developer.mapquest.com/)
+- [centerSphere](https://docs.mongodb.com/manual/reference/operator/query/centerSphere/)

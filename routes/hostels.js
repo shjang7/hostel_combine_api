@@ -6,7 +6,10 @@ const {
   createHostel,
   updateHostel,
   deleteHostel,
+  getHostelsInRadius,
 } = require('../controllers/hostels');
+
+router.route('/radius/:zipcode/:distance').get(getHostelsInRadius);
 
 router
   .route('/')
