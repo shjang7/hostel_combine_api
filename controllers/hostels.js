@@ -10,7 +10,7 @@ exports.getHostels = asyncHandler(async (req, res, next) => {
   const reqQuery = { ...req.query };
 
   // Fields to exclude
-  const removeFields = ['select', 'sort'];
+  const removeFields = ['select', 'sort', 'page', 'limit'];
 
   // Loop over removeFields and delete them from reqQuery
   removeFields.forEach(param => delete reqQuery[param]);
@@ -40,11 +40,38 @@ exports.getHostels = asyncHandler(async (req, res, next) => {
     query = query.sort('-createdAt');
   }
 
+  // Pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 25;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Hostel.countDocuments();
+
+  query = query.skip(startIndex).limit(limit);
+
   // executing query
   const hostels = await query;
 
-  console.log(queryStr);
-  res.status(200).json({ success: true, count: hostels.length, data: hostels });
+  // Pagination result
+  const pagination = {};
+
+  if (endIndex < total) {
+    pagination.next = {
+      page: page + 1,
+      limit,
+    };
+  }
+
+  if (0 < startIndex) {
+    pagination.prev = {
+      page: page - 1,
+      limit,
+    };
+  }
+
+  res
+    .status(200)
+    .json({ success: true, count: hostels.length, pagination, data: hostels });
 });
 
 // @desc    Get single hostel
