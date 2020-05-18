@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const HostelSchema = new mongoose.Schema({
   name: {
@@ -89,6 +90,12 @@ const HostelSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// Create hostel slug from the name
+HostelSchema.pre('save', function(next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
 });
 
 module.exports = mongoose.model('Hostel', HostelSchema);
