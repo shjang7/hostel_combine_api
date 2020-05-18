@@ -8,14 +8,9 @@ dotenv.config({ path: './config/config.env' });
 
 // Load models
 const Hostel = require('./models/Hostel');
+const Room = require('./models/Room');
 
 // Connect to database
-// mongoose.connect(process.env.MONGO_URI, {
-//   useNewUrlParser: true,
-//   useCreateIndex: true,
-//   useFindAndModify: false,
-//   useUnifiedTopology: true,
-// });
 const connectDB = require('./config/db');
 connectDB();
 
@@ -24,10 +19,16 @@ const hostels = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/hostels.json`, 'utf-8'),
 );
 
+// Read JSON files
+const rooms = JSON.parse(
+  fs.readFileSync(`${__dirname}/_data/rooms.json`, 'utf-8'),
+);
+
 // Import into DB
 const importData = async () => {
   try {
     await Hostel.create(hostels);
+    await Room.create(rooms);
 
     console.log('Data Imported...'.green.inverse);
     process.exit();
@@ -40,6 +41,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Hostel.deleteMany();
+    await Room.deleteMany();
 
     console.log('Data Destroyed...'.red.inverse);
     process.exit();
