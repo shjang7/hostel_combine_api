@@ -1,0 +1,10 @@
+# decoded jwt
+{ id: (user id), iat: (issued at), exp: (expiration) }
+
+# Baerer token
+headers { Authorization: 'Baerer xxxxx' }
+-> Authorization { Baerer Token: xxxxx }
+
+# Postman login token save
+login -> input tests:
+pm.environment.set('TOKEN', pm.response.json().token)
