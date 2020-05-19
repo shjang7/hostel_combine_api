@@ -7,6 +7,7 @@ const {
   updateHostel,
   deleteHostel,
   getHostelsInRadius,
+  hostelPhotoUpload,
 } = require('../controllers/hostels');
 
 // Include other resource routers
@@ -16,6 +17,7 @@ const roomRouter = require('./rooms');
 router.use('/:hostelId/rooms', roomRouter);
 
 router.route('/radius/:zipcode/:distance').get(getHostelsInRadius);
+router.route('/:id/photo').put(hostelPhotoUpload);
 
 router
   .route('/')

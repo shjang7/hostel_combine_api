@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
+const path = require('path');
+const fileupload = require('express-fileupload');
 
 const errorHandler = require('./middleware/error');
 // Load env vars
@@ -17,6 +19,9 @@ const app = express();
 
 // Body parser
 app.use(express.json());
+app.use(fileupload());
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Dev logging morgan
 if (process.env.NODE_ENV === 'development') {
