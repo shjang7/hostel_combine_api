@@ -43,8 +43,6 @@ const RoomSchema = new mongoose.Schema({
 
 // Static method to get min of room price
 RoomSchema.statics.getMinimumPrice = async function(hostelId) {
-  console.log('Calculating min price...'.blue);
-
   const obj = await this.aggregate([
     {
       $match: { hostel: hostelId },
@@ -59,7 +57,7 @@ RoomSchema.statics.getMinimumPrice = async function(hostelId) {
 
   try {
     await this.model('Hostel').findByIdAndUpdate(hostelId, {
-      minimumPrice: Math.ceil(obj[0].minimumPrice / 10) * 10,
+      minimumPrice: obj[0].minimumPrice,
     });
   } catch (err) {
     console.error(err);

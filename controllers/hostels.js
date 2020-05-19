@@ -26,6 +26,22 @@ exports.getHostel = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/hostels
 // @access  Private
 exports.createHostel = asyncHandler(async (req, res, next) => {
+  // Add user to req.body
+  req.body.user = req.user.id;
+
+  // Check for published hostels
+  const publishedHostel = await Hostel.findOne({ user: req.user.id });
+
+  // If the user is not and admin, they can only add one hostel
+  if (publishedHostel && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `The user with ID ${req.user.id} has already published a hostel`,
+        400,
+      ),
+    );
+  }
+
   const hostel = await Hostel.create(req.body);
 
   res.status(201).json({
