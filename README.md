@@ -15,3 +15,5 @@
 - [aggregate](https://docs.mongodb.com/manual/reference/method/db.collection.aggregate/)
 - [sample image: pexels.com](https://www.pexels.com/)
 - [BCrypt](https://www.npmjs.com/package/bcrypt)
+- [JSON WebToken](https://www.npmjs.com/package/jsonwebtoken)
+- [jwt.io](https://jwt.io/)
