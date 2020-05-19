@@ -54,14 +54,26 @@ exports.createHostel = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/hostels/:id
 // @access  Private
 exports.updateHostel = asyncHandler(async (req, res, next) => {
-  const hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  let hostel = await Hostel.findById(req.params.id);
 
   if (!hostel) {
     return next(new ErrorResponse('Hostel not found', 404));
   }
+
+  // Make sure user is hostel owner
+  if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to update this hostel`,
+        403,
+      ),
+    );
+  }
+
+  hostel = await Hostel.findOneAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   res.status(200).json({ success: true, data: hostel });
 });
@@ -73,6 +85,16 @@ exports.deleteHostel = asyncHandler(async (req, res, next) => {
   const hostel = await Hostel.findById(req.params.id);
   if (!hostel) {
     return next(new ErrorResponse('Hostel not found', 404));
+  }
+
+  // Make sure user is hostel owner
+  if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to delete this hostel`,
+        403,
+      ),
+    );
   }
 
   await hostel.remove();
@@ -111,6 +133,16 @@ exports.hostelPhotoUpload = asyncHandler(async (req, res, next) => {
 
   if (!hostel) {
     return next(new ErrorResponse(`Hostel not found`, 404));
+  }
+
+  // Make sure user is hostel owner
+  if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to update this hostel`,
+        403,
+      ),
+    );
   }
 
   if (!req.files) {
