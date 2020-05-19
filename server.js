@@ -4,6 +4,7 @@ const colors = require('colors');
 const morgan = require('morgan');
 const path = require('path');
 const fileupload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 
 const errorHandler = require('./middleware/error');
 // Load env vars
@@ -23,6 +24,8 @@ app.use(express.json());
 app.use(fileupload());
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+// Cookie parser
+app.use(cookieParser());
 
 // Dev logging morgan
 if (process.env.NODE_ENV === 'development') {

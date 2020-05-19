@@ -17,3 +17,4 @@
 - [BCrypt](https://www.npmjs.com/package/bcrypt)
 - [JSON WebToken](https://www.npmjs.com/package/jsonwebtoken)
 - [jwt.io](https://jwt.io/)
+- [cookie-parser options](https://www.npmjs.com/package/cookie)
