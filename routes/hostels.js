@@ -17,21 +17,23 @@ const Hostel = require('../models/Hostel');
 // Include other resource routers
 const roomRouter = require('./rooms');
 
+const { protect } = require('../middleware/auth');
+
 // Re-route into other resource routers
 router.use('/:hostelId/rooms', roomRouter);
 
 router.route('/radius/:zipcode/:distance').get(getHostelsInRadius);
-router.route('/:id/photo').put(hostelPhotoUpload);
+router.route('/:id/photo').put(protect, hostelPhotoUpload);
 
 router
   .route('/')
   .get(advancedResults(Hostel, 'rooms'), getHostels)
-  .post(createHostel);
+  .post(protect, createHostel);
 
 router
   .route('/:id')
   .get(getHostel)
-  .put(updateHostel)
-  .delete(deleteHostel);
+  .put(protect, updateHostel)
+  .delete(protect, deleteHostel);
 
 module.exports = router;

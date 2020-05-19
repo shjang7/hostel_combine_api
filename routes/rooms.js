@@ -15,6 +15,8 @@ const Room = require('../models/Room');
 // Include other resource routers
 const roomRouter = require('./rooms');
 
+const { protect } = require('../middleware/auth');
+
 router
   .route('/')
   .get(
@@ -24,12 +26,12 @@ router
     }),
     getRooms,
   )
-  .post(addRoom);
+  .post(protect, addRoom);
 
 router
   .route('/:id')
   .get(getRoom)
-  .put(updateRoom)
-  .delete(deleteRoom);
+  .put(protect, updateRoom)
+  .delete(protect, deleteRoom);
 
 module.exports = router;
