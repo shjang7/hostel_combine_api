@@ -55,6 +55,17 @@ exports.addRoom = asyncHandler(async (req, res, next) => {
   }
 
   req.body.hostel = req.params.hostelId;
+  req.body.user = req.user.id;
+
+  // Make sure user is hostel owner
+  if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to add a room to hostel ${hostel._id}`,
+        403,
+      ),
+    );
+  }
 
   const room = await Room.create(req.body);
 
@@ -72,6 +83,16 @@ exports.updateRoom = asyncHandler(async (req, res, next) => {
 
   if (!room) {
     return next(new ErrorResponse(`Room not found`, 404));
+  }
+
+  // Make sure user is hostel owner
+  if (room.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to update room ${room._id}`,
+        403,
+      ),
+    );
   }
 
   room = await Room.findByIdAndUpdate(req.params.id, req.body, {
@@ -93,6 +114,17 @@ exports.deleteRoom = asyncHandler(async (req, res, next) => {
 
   if (!room) {
     return next(new ErrorResponse(`Room not found`, 404));
+  }
+  req.body.user = req.user.id;
+
+  // Make sure user is room owner
+  if (room.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to delete room ${room._id}`,
+        403,
+      ),
+    );
   }
 
   await room.remove();
