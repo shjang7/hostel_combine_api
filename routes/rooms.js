@@ -8,9 +8,22 @@ const {
   deleteRoom,
 } = require('../controllers/rooms');
 
+const advancedResults = require('../middleware/advancedResults');
+
+const Room = require('../models/Room');
+
+// Include other resource routers
+const roomRouter = require('./rooms');
+
 router
   .route('/')
-  .get(getRooms)
+  .get(
+    advancedResults(Room, {
+      path: 'hostel',
+      select: 'name description',
+    }),
+    getRooms,
+  )
   .post(addRoom);
 
 router

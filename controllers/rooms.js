@@ -9,24 +9,20 @@ const ErrorResponse = require('../utils/errorResponse');
 // @route   GET /api/v1/hostels/:hostelId/rooms
 // @access  Public
 exports.getRooms = asyncHandler(async (req, res, next) => {
-  let query;
+  let results;
 
   if (req.params.hostelId) {
-    query = Room.find({ hostel: req.params.hostelId });
+    const rooms = await Room.find({ hostel: req.params.hostelId });
+
+    results = {
+      success: true,
+      count: rooms.length,
+      data: rooms,
+    };
   } else {
-    query = Room.find().populate({
-      path: 'hostel',
-      select: 'name description',
-    });
+    results = res.advancedResults;
   }
-
-  const rooms = await query;
-
-  res.status(200).json({
-    success: true,
-    count: rooms.length,
-    data: rooms,
-  });
+  res.status(200).json(results);
 });
 
 // @desc    Get single room

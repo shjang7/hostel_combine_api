@@ -10,6 +10,10 @@ const {
   hostelPhotoUpload,
 } = require('../controllers/hostels');
 
+const advancedResults = require('../middleware/advancedResults');
+
+const Hostel = require('../models/Hostel');
+
 // Include other resource routers
 const roomRouter = require('./rooms');
 
@@ -21,7 +25,7 @@ router.route('/:id/photo').put(hostelPhotoUpload);
 
 router
   .route('/')
-  .get(getHostels)
+  .get(advancedResults(Hostel, 'rooms'), getHostels)
   .post(createHostel);
 
 router
