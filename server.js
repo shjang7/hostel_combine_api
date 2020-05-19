@@ -14,6 +14,7 @@ connectDB();
 // Route files
 const hostels = require('./routes/hostels');
 const rooms = require('./routes/rooms');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 // Mount routers
 app.use('/api/v1/hostels', hostels);
 app.use('/api/v1/rooms', rooms);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 
