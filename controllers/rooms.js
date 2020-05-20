@@ -51,7 +51,7 @@ exports.addRoom = asyncHandler(async (req, res, next) => {
   const hostel = await Hostel.findById(req.params.hostelId);
 
   if (!hostel) {
-    return next(new ErrorResponse(`No hostel found`, 404));
+    return next(new ErrorResponse(`Hostel not found`, 404));
   }
 
   req.body.hostel = req.params.hostelId;

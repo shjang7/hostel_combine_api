@@ -16,11 +16,13 @@ const Hostel = require('../models/Hostel');
 
 // Include other resource routers
 const roomRouter = require('./rooms');
+const reviewRouter = require('./reviews');
 
 const { protect, authorize } = require('../middleware/auth');
 
 // Re-route into other resource routers
 router.use('/:hostelId/rooms', roomRouter);
+router.use('/:hostelId/reviews', reviewRouter);
 
 router.route('/radius/:zipcode/:distance').get(getHostelsInRadius);
 router
