@@ -8,3 +8,6 @@ headers { Authorization: 'Baerer xxxxx' }
 # Postman login token save
 login -> input tests:
 pm.environment.set('TOKEN', pm.response.json().token)
+
+# hooks
+- Pre: save, findOneAndUpdate, remove

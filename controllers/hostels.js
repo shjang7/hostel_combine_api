@@ -99,7 +99,7 @@ exports.deleteHostel = asyncHandler(async (req, res, next) => {
 
   await hostel.remove();
 
-  res.status(200).json({ success: true, data: {} });
+  res.status(204).json();
 });
 
 // @desc    Get hostels within a radius

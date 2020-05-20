@@ -20,3 +20,6 @@
 - [cookie-parser options](https://www.npmjs.com/package/cookie)
 - [Nodemailer](https://nodemailer.com/)
 - [fake mailbox](https://mailtrap.io/)
+- [pre hook](https://mongoosejs.com/docs/api.html#schema_Schema-pre)
+- [express route](https://expressjs.com/en/guide/routing.html)
+- [express using middleware](https://expressjs.com/en/guide/using-middleware.html)

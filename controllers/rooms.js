@@ -129,8 +129,5 @@ exports.deleteRoom = asyncHandler(async (req, res, next) => {
 
   await room.remove();
 
-  res.status(200).json({
-    success: true,
-    data: {},
-  });
+  res.status(204).json();
 });
