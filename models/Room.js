@@ -69,6 +69,13 @@ RoomSchema.post('save', function() {
   this.constructor.getMinimumPrice(this.hostel);
 });
 
+// Update room
+RoomSchema.pre('findOneAndUpdate', function(next) {
+  const update = this.getUpdate();
+  update.updatedAt = Date.now();
+  next();
+});
+
 // Call getMinimumPrice before remove
 RoomSchema.pre('remove', function() {
   this.constructor.getMinimumPrice(this.hostel);

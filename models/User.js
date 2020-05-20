@@ -49,6 +49,13 @@ UserSchema.pre('save', async function(next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+// Update user
+UserSchema.pre('findOneAndUpdate', function(next) {
+  const update = this.getUpdate();
+  update.updatedAt = Date.now();
+  next();
+});
+
 // Sign JWT and return
 UserSchema.methods.getSignedJwtToken = function() {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {

@@ -129,6 +129,13 @@ HostelSchema.pre('save', async function(next) {
   next();
 });
 
+// Update hostel
+HostelSchema.pre('findOneAndUpdate', function(next) {
+  const update = this.getUpdate();
+  update.updatedAt = Date.now();
+  next();
+});
+
 // Cascade delete rooms when a hostel is deleted
 HostelSchema.pre('remove', async function(next) {
   console.log(`Rooms being removed from hostel ${this._id}`);
