@@ -18,3 +18,5 @@
 - [JSON WebToken](https://www.npmjs.com/package/jsonwebtoken)
 - [jwt.io](https://jwt.io/)
 - [cookie-parser options](https://www.npmjs.com/package/cookie)
+- [Nodemailer](https://nodemailer.com/)
+- [fake mailbox](https://mailtrap.io/)
