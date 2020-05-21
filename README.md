@@ -23,3 +23,4 @@
 - [pre hook](https://mongoosejs.com/docs/api.html#schema_Schema-pre)
 - [express route](https://expressjs.com/en/guide/routing.html)
 - [express using middleware](https://expressjs.com/en/guide/using-middleware.html)
+- [mongoose findByIdAndUpdate](https://mongoosejs.com/docs/api/model.html#model_Model.findByIdAndUpdate)

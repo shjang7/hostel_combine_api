@@ -54,10 +54,11 @@ ReviewSchema.statics.getAverageRating = async function(hostelId) {
     },
   ]);
 
+  const averageRating =
+    obj.length > 0 ? Math.round(obj[0].averageRating * 10) / 10 : null;
+
   try {
-    await this.model('Hostel').findByIdAndUpdate(hostelId, {
-      averageRating: Math.round(obj[0].averageRating * 10) / 10,
-    });
+    await this.model('Hostel').findByIdAndUpdate(hostelId, { averageRating });
   } catch (err) {
     console.error(err);
   }
@@ -75,7 +76,7 @@ ReviewSchema.pre('findOneAndUpdate', function(next) {
   next();
 });
 
-ReviewSchema.pre('remove', function() {
+ReviewSchema.post('remove', function() {
   this.constructor.getAverageRating(this.hostel);
 });
 
