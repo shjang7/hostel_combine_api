@@ -10,7 +10,6 @@ const ErrorResponse = require('../utils/errorResponse');
 // @access  Public
 exports.getRooms = asyncHandler(async (req, res, next) => {
   let results;
-  console.log(req.params);
 
   if (req.params.hostelId) {
     const rooms = await Room.find({ hostel: req.params.hostelId });
@@ -23,6 +22,7 @@ exports.getRooms = asyncHandler(async (req, res, next) => {
   } else {
     results = res.advancedResults;
   }
+
   res.status(200).json(results);
 });
 
@@ -100,6 +100,10 @@ exports.updateRoom = asyncHandler(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
+
+  if (req.body.price) {
+    room.save();
+  }
 
   res.status(200).json({
     success: true,

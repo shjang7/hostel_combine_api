@@ -55,10 +55,10 @@ RoomSchema.statics.getMinimumPrice = async function(hostelId) {
     },
   ]);
 
+  const minimumPrice = obj.length > 0 ? obj[0].minimumPrice : null;
+
   try {
-    await this.model('Hostel').findByIdAndUpdate(hostelId, {
-      minimumPrice: obj[0].minimumPrice,
-    });
+    await this.model('Hostel').findByIdAndUpdate(hostelId, { minimumPrice });
   } catch (err) {
     console.error(err);
   }
@@ -77,7 +77,7 @@ RoomSchema.pre('findOneAndUpdate', function(next) {
 });
 
 // Call getMinimumPrice before remove
-RoomSchema.pre('remove', function() {
+RoomSchema.post('remove', function() {
   this.constructor.getMinimumPrice(this.hostel);
 });
 

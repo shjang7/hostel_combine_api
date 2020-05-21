@@ -9,8 +9,10 @@ const ErrorResponse = require('../utils/errorResponse');
 // @access  Public
 exports.getReviews = asyncHandler(async (req, res, next) => {
   let results;
+
   if (req.params.hostelId) {
     const reviews = await Review.find({ hostel: req.params.hostelId });
+
     results = {
       success: true,
       count: reviews.length,
@@ -19,6 +21,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
   } else {
     results = res.advancedResults;
   }
+
   res.status(200).json(results);
 });
 
