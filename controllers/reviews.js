@@ -53,8 +53,7 @@ exports.addReview = asyncHandler(async (req, res, next) => {
 
   const review = await Review.create(req.body);
 
-  return res.status(201).json({ success: true, data: review });
+  res.status(201).json({ success: true, data: review });
 });
-
 exports.updateReview = asyncHandler(async (req, res, next) => {});
 exports.deleteReview = asyncHandler(async (req, res, next) => {});
