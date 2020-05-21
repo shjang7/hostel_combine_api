@@ -24,3 +24,5 @@
 - [express route](https://expressjs.com/en/guide/routing.html)
 - [express using middleware](https://expressjs.com/en/guide/using-middleware.html)
 - [mongoose findByIdAndUpdate](https://mongoosejs.com/docs/api/model.html#model_Model.findByIdAndUpdate)
+- [hacking nodejs and mongodb](https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html)
+- [express mongo sanitize](https://www.npmjs.com/package/express-mongo-sanitize)

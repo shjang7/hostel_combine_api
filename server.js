@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const errorHandler = require('./middleware/error');
 // Load env vars
@@ -28,6 +29,8 @@ app.use(fileupload());
 app.use(express.static(path.join(__dirname, 'public')));
 // Cookie parser
 app.use(cookieParser());
+// Sanitize data
+app.use(mongoSanitize());
 
 // Dev logging morgan
 if (process.env.NODE_ENV === 'development') {
