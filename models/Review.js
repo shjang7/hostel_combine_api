@@ -37,6 +37,9 @@ const ReviewSchema = new mongoose.Schema({
   },
 });
 
+// Prevent user from submitting more than one review per hostel
+ReviewSchema.index({ hostel: 1, user: 1 }, { unique: true });
+
 // Update review
 ReviewSchema.pre('findOneAndUpdate', function(next) {
   const update = this.getUpdate();

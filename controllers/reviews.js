@@ -1,4 +1,5 @@
 const Review = require('../models/Review');
+const Hostel = require('../models/Hostel');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
@@ -37,6 +38,23 @@ exports.getReview = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: review });
 });
 
-exports.addReview = asyncHandler(async (req, res, next) => {});
+// @desc    Add review
+// @route   POST /api/v1/hostels/:hostelId/reviews
+// @access  Private
+exports.addReview = asyncHandler(async (req, res, next) => {
+  const hostel = await Hostel.findById(req.params.hostelId);
+
+  if (!hostel) {
+    return next(new ErrorResponse(`Hostel not found`, 404));
+  }
+
+  req.body.hostel = req.params.hostelId;
+  req.body.user = req.user.id;
+
+  const review = await Review.create(req.body);
+
+  return res.status(201).json({ success: true, data: review });
+});
+
 exports.updateReview = asyncHandler(async (req, res, next) => {});
 exports.deleteReview = asyncHandler(async (req, res, next) => {});
