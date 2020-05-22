@@ -39,6 +39,9 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+// Prevent same email user registration more than one
+UserSchema.index({ email: 1 }, { unique: true });
+
 // Encrypt password using bcrypt
 UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {
