@@ -32,3 +32,5 @@
 - [CORS npm](https://www.npmjs.com/package/cors)
 - [CORS docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
   - A web application executes a cross-origin HTTP request when it requests a resource that has a different origin (domain, protocol, or port) from its own.
+- [docgen](https://github.com/thedevsaddam/docgen)
+- [bootstrap fonts](https://github.com/twbs/bootstrap-sass/tree/master/assets/fonts/bootstrap)
