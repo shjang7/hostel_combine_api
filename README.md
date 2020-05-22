@@ -29,3 +29,6 @@
 - [helmet](https://helmetjs.github.io/)
 - [cross site scripting prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)
 - [mongoose index](https://mongoosejs.com/docs/2.7.x/docs/indexes.html)
+- [CORS npm](https://www.npmjs.com/package/cors)
+- [CORS docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+  - A web application executes a cross-origin HTTP request when it requests a resource that has a different origin (domain, protocol, or port) from its own.
