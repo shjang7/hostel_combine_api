@@ -1,5 +1,53 @@
 # Hostel Combine API
 
+> Back-end API for HostelCombine application, which is a hostel directory website
+
+## Version Info
+
+- NodeJS v12.16.1
+
+## Getting Started
+
+- Rename "config/config.env.temp" to "config/config.env" and update the values; setting to your own.
+
+> Install Dependencies
+
+```
+$ npm install
+```
+
+> Database Seeding
+
+To seed the database with users, hostels, rooms and reviews with data from the "\_data" folder, run,
+
+```
+# Destroy all data
+$ node seeder -d
+
+# Import all data
+$ node seeder -i
+```
+
+> Run application
+
+```
+# For production mode
+$ npm run start
+
+# For developer mode
+$ npm run dev
+```
+
+## ✨Live Demo
+
+The API is live at [herokuapp](https://node-hostel-combine-suh.herokuapp.com/).
+
+Extensive documentation with examples [here](https://documenter.getpostman.com/view/8001436/Szt8c9Vt?version=latest)
+
+- Version: 1.0.0
+- License: MIT
+- Author: Suhyeon Jang
+
 ## Resources
 
 - [javascript regex url](https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url)
